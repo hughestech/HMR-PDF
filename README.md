@@ -3,6 +3,8 @@
 HMR-PDF is a PDF making utility made with [Astro](https://astro.build/) and [Paged.js](https://www.pagedjs.org/).
 HMR-PDF helps you create PDFs using markdown in a hot module reloading environment. Meaning you will see the changes update live.
 
+![demo](/public/assets/images/hmr-pdf-demo.png)
+
 ## How to use
 
 Simply write your markdown in **Content.astro** (`/src/components/Content.astro`) and whenever you save the file you will see the changes update in the browser.
