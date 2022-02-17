@@ -1,0 +1,40 @@
+---
+import CompareRow from './CompareRow.astro';
+import { getComparisonTraditionalCrypto } from '../../../lib/api';
+
+const result = await getComparisonTraditionalCrypto();
+
+
+---
+<style>
+.table { @apply  text-gray-900 table-fixed w-full shadow-none }
+.table thead { @apply border-gray-700 bg-gray-50 text-black p-2 border-y }
+.table th:nth-child(1) { @apply w-1/4 } 
+.table tr:nth-child(odd) { @apply text-blue-900 }
+.table tr:nth-child(even) { @apply text-blue-900 }
+.table td { @apply p-2 }
+</style>
+<h2>Comparing Exchanges</h2>
+<h3>Traditional vs Crypto Exchanges</h3>
+
+<p>Traditional securities exchanges compared to Crypto Exchanges</p>
+
+<p>The following differences may be challenging should Toha adopt a &lsquo;Crypto exchange wrapped in a Traditional exchange&rsquo;.</p>
+
+<table class="table text-gray-900 table-fixed w-full shadow-none">
+	<thead>
+		<tr>
+			<th class=" p-2 w-1/4">Feature</th>
+			<th class=" p-2">Traditional</th>
+			<th class=" p-2">Crypto</th>
+		</tr>
+	</thead>
+	<tbody>
+        {result.map(row => <CompareRow 
+            feature={row.Feature}
+            traditional={row.Traditional}
+            crypto={row.Crypto}
+         />)}
+		
+	</tbody>
+</table>

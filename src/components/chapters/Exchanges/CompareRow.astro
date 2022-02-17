@@ -1,0 +1,13 @@
+---
+export interface Props {
+  feature: string;
+  traditional?: string;
+  crypto?: string;
+}
+const { feature = 'Hello', traditional, crypto } = Astro.props;
+---
+<tr class="text-xs">
+    <td class="p-2 font-semibold">{feature}</td>
+    <td class="p-2">{traditional}</td>
+    <td class="p-2">{crypto}</td>
+</tr>

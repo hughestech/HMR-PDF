@@ -1,0 +1,36 @@
+---
+import Markdown from "astro/components/Markdown.astro";
+import { getCryptoStandards } from '../../../lib/api';
+import FIXStandardRow from './FIXStandardRow.astro';
+import Resource from '../../resourcing/Resource.astro';
+const result = await getCryptoStandards();
+---
+<style>
+.table { @apply  text-gray-900 table-fixed w-full shadow-none }
+.table thead { @apply border-gray-700 bg-gray-50 text-black p-2 border-y }
+.table th:nth-child(1) { @apply w-1/4; display: table-header-group; } 
+
+.table td { @apply p-2 }
+</style>
+<Markdown>
+## Common Crypto Exchange Standards
+
+
+### Crypto Standard
+
+The following table contains a list of well known community developed standards for trading on cryptocurrency exchanges. CCXT is the most common standard used by traders. CCXT is a wrapper around an exchanges proprietary API. 
+
+</Markdown>
+<table class="table text-gray-900 table-fixed w-full shadow-none">
+	<thead>
+		<tr>
+			<th class=" p-2 w-1/4">Name</th>
+			<th class=" p-2 w-1/6">Abbreviation</th>
+			<th class=" p-2">Goal</th>
+		</tr>
+	</thead>
+	<tbody>
+        {result.map(row => <FIXStandardRow standard={row} />)} 		
+	</tbody>
+</table>
+<Resource role='BA' filterRef={[100]}  />

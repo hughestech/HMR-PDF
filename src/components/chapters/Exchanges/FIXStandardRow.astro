@@ -1,0 +1,11 @@
+---
+export interface Props {
+  standard: object
+}
+const { standard } = Astro.props;
+---
+<tr class="text-xs">
+    <td class="p-2"><a href={standard.Link}>{standard.Name} </a></td>
+    <td class="p-2">{standard.Abbreviation}</td>
+    <td class="p-2 text-xs">{standard.Goal}</td>
+</tr>

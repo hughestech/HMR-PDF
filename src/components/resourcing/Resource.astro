@@ -1,0 +1,88 @@
+---
+import { getAllActivities } from '../../lib/api';
+import ResourceTable from "./ResourceTable.astro"
+export interface Props {
+  role?: string;
+  filterRef?: Array<number>;
+  title?: string;
+  data?: any;
+}
+
+const { role = 'Hello', filterRef, title, data } = Astro.props;
+console.log(filterRef);
+let acttivity = await getAllActivities(role);
+// if (filterRef) {  
+//   console.log(filterRef);
+//   // acttivity.filter(item => item.ref === filterRef);
+//   acttivity = acttivity.filter(function(item) {
+//   return filterRef.includes(item.Ref); 
+// })
+// }
+acttivity.sort(function(a, b) {
+  return a.Ref - b.Ref;
+});
+
+//filter activity by filterRef range
+acttivity = acttivity.filter(function(item) {
+  return item.Ref >= filterRef[0] && item.Ref <= filterRef[1];; 
+})
+
+
+
+// distinct roles
+const roles = [...new Set(acttivity.map(item => item.Role))];
+console.log(`${title} has roles: ${roles}`);
+---
+<h3>Resourcing</h3>
+<ResourceTable data={data} />
+<!-- {acttivity?.map((item) => (
+    <h4>{item.Role}</h4>
+))} -->
+<div class="flex flex-col text-sm max-w-full overflow-auto divide-y-1">
+  <div class="flex-shrink-0 flex border-y border-gray-700 bg-gray-50 ">
+    <div class="flex-shrink-0 w-12 p-1">Ref.</div>
+    <div class="flex-shrink-0 w-14 p-1">Role</div>
+    <div class="flex-grow w-24 p-1">Activity</div>
+    <div class="flex-grow w-6 p-1">Optimistic</div>
+    <div class="flex-grow w-6 p-1">Likely</div>
+    <div class="flex-grow w-6 p-1">Pesimistic</div>
+  </div>
+{acttivity?.map((item) => 
+  <div class="flex border-b border-gray-300">
+    <div class="flex-shrink-0 w-12 flex flex-col p-1">{item.Ref}</div>
+    <div class="flex-shrink-0 w-14 p-1 ">{item.Role}</div>
+    <div class="flex-grow w-24 text-xs p-1">{item.Activity}</div>
+    <div class="flex-grow w-6 p-1">{item.Optimistic}</div>
+    <div class="flex-grow w-6 p-1">{item.Likely}</div>
+    <div class="flex-grow w-6 p-1">{item.Pesimistic}</div>
+  </div>
+  )}
+</div>
+<h4>Total</h4>
+{title!=null?<p>Hours for tasks related to {title}:</p>:<p>Hours for these tasks:</p>}
+
+<div class="flex flex-col text-sm max-w-full overflow-auto divide-y-1">
+  <div class="flex-shrink-0 flex border-y border-gray-700 bg-gray-50 ">
+    <div class="flex-grow w-1/3 p-1">Optimistic</div>
+    <div class="flex-grow w-1/3 p-1">Likely</div>
+    <div class="flex-grow w-1/3 p-1">Pesimistic</div>
+  </div>
+
+  <div class="flex border-b border-gray-300">
+    <div class="flex-grow w-1/3 p-1">
+    {acttivity?.reduce((acc, item) => {
+  return acc + item.Optimistic;
+}, 0)}</div>
+    <div class="flex-grow w-1/3 p-1">
+    {acttivity?.reduce((acc, item) => {
+  return acc + item.Likely;
+}, 0)}</div>
+    <div class="flex-grow w-1/3 p-1">
+    
+    {acttivity?.reduce((acc, item) => {
+  return acc + item.Pesimistic;
+}, 0)}
+    </div>
+  </div>
+
+</div>

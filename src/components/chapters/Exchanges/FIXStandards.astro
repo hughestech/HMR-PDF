@@ -1,0 +1,44 @@
+---
+import Markdown from "astro/components/Markdown.astro"
+// import Resource from '../../../components/resourcing//Resource.astro';
+import Resource from "../../../components/resourcing/Resource.astro"
+const data = Astro.fetchContent('./md/FXStandards.md');
+const taskUpper = data[0].taskRange[0];
+const taskLower = data[0].taskRange[1];
+import { getFIXStandards } from '../../../lib/api';
+import FIXStandardRow from './FIXStandardRow.astro';
+const result = await getFIXStandards();
+---
+<style>
+.table { @apply  text-gray-900 table-fixed w-full shadow-none; page-break-after: always;}
+.table thead { @apply border-gray-700 bg-gray-50 text-black p-2 border-y }
+.table th:nth-child(1) { @apply w-1/4 } 
+
+.table td { @apply p-2 }
+.table thead, tfoot {
+    display: table-row-group
+}
+</style>
+<div>
+
+  <article class="prose prose-stone prose-sm">
+    {data[0].astro.html}
+  </article>
+
+</div>
+
+<table class="table text-gray-900 table-fixed w-full shadow-none">
+	<thead>
+		<tr>
+			<th class=" p-2 w-1/4">Name</th>
+			<th class=" p-2 w-1/6">Abbreviation</th>
+			<th class=" p-2">Goal</th>
+		</tr>
+	</thead>
+	<tbody>
+        {result.map(row => <FIXStandardRow standard={row} />)} 		
+	</tbody>
+</table>
+<Markdown>
+    <Resource filterRef={[taskUpper, taskLower]} />
+</Markdown>

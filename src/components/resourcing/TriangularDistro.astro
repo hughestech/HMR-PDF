@@ -1,0 +1,10 @@
+---
+import Resource from './Resource.astro';
+export interface Props {
+  lower?: number;
+  upper?: number;
+}
+
+const { upper = 20, lower = 10 } = Astro.props;
+---
+ <Resource role='BA' filterRef={[lower,upper]} />

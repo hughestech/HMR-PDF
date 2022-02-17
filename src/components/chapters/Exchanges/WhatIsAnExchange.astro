@@ -1,0 +1,18 @@
+---
+import Markdown from "astro/components/Markdown.astro"
+// import Resource from '../../../components/resourcing//Resource.astro';
+import Resource from "../../../components/resourcing/Resource.astro"
+const data = Astro.fetchContent('./md/what_is_an_exchange.md');
+const taskUpper = data[0].taskRange[0];
+const taskLower = data[0].taskRange[1];
+---
+<div>
+
+  <article class="prose prose-stone prose-sm">
+    {data[0].astro.html}
+  </article>
+
+</div>
+<Markdown>
+    <Resource filterRef={[taskUpper, taskLower]} />
+</Markdown>

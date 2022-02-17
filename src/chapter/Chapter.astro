@@ -1,0 +1,15 @@
+---
+// ./src/components/my-component.astro
+const data = Astro.fetchContent('../pages/trade_lifecycle/*.md'); // returns an array of posts that live at ./src/pages/post/*.md
+data.sort(function(a, b) {
+  return a.order - b.order;
+});
+-----
+<div>
+{data.map((post) => (
+  <article class="prose prose-stone prose-sm">
+    {post.astro.html}
+   
+  </article>
+))}
+</div>

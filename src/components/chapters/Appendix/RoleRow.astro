@@ -1,0 +1,11 @@
+---
+export interface Props {
+  name: string;
+  abbreviation: string;
+}
+const { name = 'Hello', abbreviation } = Astro.props;
+---
+<tr class="">
+    <td class="p-2 font-semibold">{name}</td>
+    <td class="p-2">{abbreviation}</td>
+</tr>

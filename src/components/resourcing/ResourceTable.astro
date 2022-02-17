@@ -1,0 +1,15 @@
+---
+import MissingTasks from "./MissingTasks.astro";
+export interface Props {
+  data: any;
+}
+const { data } = Astro.props;
+
+let hasTasks = true;
+console.log(data);
+if (data === undefined || !data.taskRange || data.taskRange === undefined || data.taskRange[0] == 0) {
+  hasTasks = false;
+}   
+
+---
+{hasTasks ? (<p>has tasks</p>) : (<MissingTasks/>)}

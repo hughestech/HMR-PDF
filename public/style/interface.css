@@ -1,4 +1,188 @@
+
+
+
 /* CSS for Paged.js interface – v0.2 */
+
+
+/* h2 {
+  string-set: titleBefore content(before), title content(text);
+} */
+@page page {
+  size: A4;
+}
+
+@page cover { 
+  page: cover; 
+}
+
+/* #cover {
+ background-image: url('https://media.istockphoto.com/photos/business-picture-id476556935'); 
+ background-size: cover;
+} */
+@page cover {
+  margin: 0;
+  background: url("https://i2.wp.com/pixahive.com/wp-content/uploads/2020/09/Astro-beautiful-sky-48105-pixahive.jpg");
+  background-position: center;
+  background-size: 104%;
+  background-repeat: no-repeat;
+
+  @top-left{ content: none; }
+  @top-center{ content: none; }
+  @top-right{ content: none; }
+  @bottom-left{ content: none; }
+}
+
+
+#cover {
+  page: cover;
+  page-break-after: always;
+  counter-reset: page;
+}
+
+#cover > #title {
+  font-size: 5em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: white;
+  background-color: rgba(49, 30, 30, 0.616);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* transform: translate(-50%, -50%); */
+}
+
+
+/* body {
+  counter-reset: figureNumber;  
+} */
+
+
+
+figcaption {
+  counter-increment: figureNumber;
+}
+
+figcaption::before {
+  content: counter(figureNumber);
+}
+
+/* set the style for the list numbering to none */
+#list-toc-generated {
+  list-style: none;
+}
+
+#list-toc-generated .toc-element {
+  break-inside: avoid;
+}
+
+#list-toc-generated .toc-element a::after {
+  content: " p. " target-counter(attr(href), page);
+  float: right;
+}
+
+#list-toc-generated .toc-element-level-1 {
+  margin-top: 25px;
+  font-weight: bold;
+}
+
+#list-toc-generated .toc-element-level-2 {
+  margin-left: 25px;
+}
+
+/* counters */
+
+#list-toc-generated {
+  counter-reset: counterTocLevel1;
+}
+
+#list-toc-generated .toc-element-level-1 {
+  counter-increment: counterTocLevel1;
+  counter-reset: counterTocLevel2;
+}
+
+#list-toc-generated .toc-element-level-1::before {
+  content: counter(counterTocLevel1) ". ";
+  padding-right: 5px;
+}
+
+#list-toc-generated .toc-element-level-2 {
+  counter-increment: counterTocLevel2;
+}
+
+#list-toc-generated .toc-element-level-2::before {
+  content: counter(counterTocLevel1) ". " counter(counterTocLevel2) ". ";
+  padding-right: 5px;
+}
+
+/* hack for leaders */
+
+#list-toc-generated {
+  overflow-x: hidden;
+}
+
+/* fake leading */
+#list-toc-generated .toc-element::after {
+  content: ".............................................."
+    ".............................................."
+    ".............................................." "........";
+  float: left;
+  width: 0;
+  padding-left: 5px;
+  letter-spacing: 2px;
+}
+
+#list-toc-generated .toc-element {
+  display: flex;
+}
+
+#list-toc-generated .toc-element a::after {
+  position: absolute;
+  right: 0;
+  background-color: white;
+  padding-left: 6px;
+}
+
+#list-toc-generated .toc-element a {
+  right: 0;
+}
+
+.toc-element-level-h2{
+  
+  text-indent: 2em;
+}
+.toc-element-level-h3{
+  text-indent: 3em;
+}
+
+h1, h2 {
+  break-before: page;
+  border-bottom: 1px solid black;
+  
+  string-set: title content(text);
+}
+
+.h2::before {
+  content: "Note: ";
+  color: red;
+  font-weight: bold;
+}
+
+@page {
+  @bottom-left {
+    content: "Page " counter(page) " of " counter(pages);
+    font-size: 11px;
+  }
+}
+@page {
+  @bottom-center {
+    content: string(title);
+    text-transform: uppercasse;
+    font-size: 11px;
+  }
+}
+
 
 /* Change the look */
 :root {
@@ -12,6 +196,8 @@
   --pagedjs-crop-stroke: 1px;
   --pages-on-screen: 1; /* Change the number of pages you see on screen at a time */
 }
+
+
 
 /* To define how the book look on the screen: */
 @media screen {
@@ -29,6 +215,8 @@
 
   .pagedjs_page {
     background-color: var(--color-paper);
+    /* background-image: url('https://media.istockphoto.com/photos/business-picture-id476556935'); */
+
     box-shadow: 0 0 0 1px var(--color-pageSheet);
     margin: 0;
     flex-shrink: 0;
@@ -96,7 +284,7 @@
 
   /* uncomment this part for recto/verso book : ------------------------------------ */
 
-  /*
+ 
     .pagedjs_pages {
         flex-direction: column;
         width: 100%;
@@ -126,11 +314,11 @@
     .pagedjs_right_page{
         left: 0; 
     } 
-    */
+    
 
   /*--------------------------------------------------------------------------------------*/
 
-  /* uncomment this par to see the baseline : -------------------------------------------*/
+  /* uncomment this part to see the baseline : -------------------------------------------*/
 
   /* .pagedjs_pagebox {
     --pagedjs-baseline: 22px;
