@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-const API_URL = process.env.GRAPHQL_URL;
+const API_URL = process.env.PUBLIC_GRAPHQL_URL;
 console.log(API_URL);
 
 export enum Direction {
